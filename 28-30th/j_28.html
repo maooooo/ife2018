@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .wrapper {
+            position: relative;
+        }
+
+        ul {
+            padding: 0 ;
+            margin: 0;
+            border: 1px solid black;
+            position: absolute;
+            top: 23px;
+            background-color:white;
+        }
+
+        li {
+            font-size: 14px;
+            font-family: Arial, Helvetica, sans-serif;
+            padding: 0.5em 0.3em;
+            margin: 0 0;
+            list-style: none;
+            cursor: pointer;;
+        }
+        li:hover{
+            background-color:aqua!important; 
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <input id="email-input" type="text">
+        <ul id="email-sug-wrapper" class="email-sug"></ul>
+    </div>
+
+    <script>
+        var postfixList = ["163.com", "gmail.com", "126.com", "qq.com", "263.net"];
+        var inputDom = document.getElementById("email-input");
+        var lists = document.getElementById("email-sug-wrapper");           
+        lists.style.display = "none";
+        var nowSelectTipIndex = 0;
+        
+        inputDom.focus();
+        inputDom.oninput = function (e) {
+            if(!(e.keyCode===40||e.keyCode===38||e.keyCode===13)){
+                nowSelectTipIndex=0;
+            }
+            addContent();
+            showWrapper();
+        }
+        
+        lists.onclick=function(e){ //事件委托
+            var event=e||window.event;
+            var target=event.target||event.srcElement;
+            inputDom.value=HTMLDecode(target.textContent);
+            hide();
+            inputDom.focus();
+        }
+        
+        inputDom.addEventListener("keydown",function(e){
+            var keycode=e.keyCode;
+            var lis=lists.getElementsByTagName("li");    
+            if(keycode===40){//down
+                e.preventDefault();
+                if(nowSelectTipIndex<lis.length){
+                    nowSelectTipIndex++;
+                }
+                changeBGC();
+            }
+            
+            if(keycode===38){//up
+                e.preventDefault();
+                if(nowSelectTipIndex>1){
+                    nowSelectTipIndex--;
+                }
+                changeBGC();
+            }
+            
+            if(keycode===13){//enter
+                this.value=HTMLDecode(lis[nowSelectTipIndex-1].textContent);
+                nowSelectTipIndex=0;
+                hide();
+            }
+            
+            if(keycode===27){
+                this.select();
+            }
+        },false);
+
+        function changeBGC(){
+            var lis=lists.getElementsByTagName("li");
+            for(var i=0;i<lis.length;i++){
+                lis[i].style.backgroundColor="white";
+            }
+            lis[nowSelectTipIndex-1].style.backgroundColor="pink";
+        }
+
+        function getInput() {
+            var str = inputDom.value;
+            return trimRight(trimLeft(str));
+        }
+        function trimLeft(str) {
+            if (str == null) return "";
+            var whitespace = new String(" \t\n\r");
+            if (whitespace.indexOf(str.charAt(0)) != -1) {
+                var j = 0, i = str.length;
+                while (j < i && whitespace.indexOf(str.charAt(j)) != -1) {
+                    j++;
+                }
+                str = str.substring(j, i);
+            }
+            return str;
+        }
+        function trimRight(str) {
+            if (str == null) return "";
+            var whitespace = " \t\n\r";
+            if (whitespace.indexOf(str.charAt(str.length - 1)) != -1) {
+                var j = str.length - 1;
+                while (j > 0 && whitespace.indexOf(str.charAt(j)) != -1) {
+                    j--;
+                }
+                str = str.substring(0, j + 1);
+            }
+            return str;
+        }
+
+        function createWrapperContent() {//生成提示框中的提示内容
+            var str = HTMLEncode(getInput());
+            if(str.indexOf("@")!=-1){
+                var text=str.substring(str.indexOf('@')+1);
+                str=str.substring(0,str.indexOf("@"));
+                
+            }
+            var li_arr = new Array();
+            var newpostfixlist= new Array();
+            for (var i=0;i<postfixList.length;i++) {//将匹配到的内容存在新数组
+                if(postfixList[i].indexOf(text)===0){
+                    newpostfixlist.push(postfixList[i]);
+                }                
+            }
+            if(newpostfixlist.length===0){//当用户输入不满足任何前缀匹配时，则显示全部提示
+                newpostfixlist=postfixList;
+            }
+            for(var i=0;i<newpostfixlist.length;i++){// 把用来拼接的用户输入内容和每一个postfix进行结合成为每一个Li
+                var li = document.createElement("li");
+                li.textContent = str + "@" + newpostfixlist[i];
+                li_arr[i] = li;
+            }
+            return li_arr;
+        }
+
+        function addContent() {//将提示内容添加到email-sug-wrapper中
+            var content = createWrapperContent();   
+            lists.innerHTML = "";
+            for (i in content) {
+                lists.appendChild(content[i]);
+            }//将内容添加到email-sug-wrapper中
+            
+        }
+
+        function showWrapper() {
+            var content = getInput();
+            if (content.length === 0) {
+                hide();
+            } else {
+                show();
+            }
+        }
+
+        function hide() {    
+            lists.style.display = "none";//做具体隐藏提示框的操作
+        }
+
+        function show() {      
+            lists.style.display = "block";//做具体显示提示框的操作
+        }
+
+        function HTMLEncode(text){//编码
+            var temp=document.createElement("div");
+            (temp.textContent===undefined)?(temp.innerText=text):(temp.textContent=text);
+            var output=temp.innerHTML;
+            temp=null;
+            return output;
+        }
+        function HTMLDecode(text){//解码
+            var temp=document.createElement("div");
+            temp.innerHTML=text;
+            var output=temp.textContent||text.innerText;
+            temp=null;
+            return output;
+        }
+    </script>
+</body>
+
+</html>
