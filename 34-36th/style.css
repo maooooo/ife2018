@@ -1,0 +1,44 @@
+body,p,table,td,tr,th,div{
+    padding: 0;
+    margin: 0;
+}
+table{
+    font-family: "思源黑体","黑体",Arial, Helvetica, sans-serif;
+    text-align: center;
+    margin-top:1em; 
+    border: 1px solid #aaa;
+    border-collapse: collapse;
+}
+tr{
+    border-bottom: 1px solid #aaa;
+}
+td,th{
+    padding: 0.2em 0.2em;
+    border-right: 1px solid #aaa;
+}
+div{
+    margin-left: 1em;
+}
+div#product-radio-wrapper{
+    margin-top: 1em;
+}
+form{
+    margin-bottom:0.8em; 
+}
+input{
+    display: none;
+}
+label{
+    color: #555;
+    font-size: 0.9em;
+
+    padding: .2em .8em;
+    margin:0 0.5em 0.5em 0;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: #666 1px 2px;
+}
+.selected{
+    color: #fff;
+    background-color: #888;
+}

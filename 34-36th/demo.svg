@@ -1,0 +1,31 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg">
+
+<line x1="5" y1="5" x2="200" y2="150" style="stroke:#888;stroke-width:3" />
+
+<rect x="210" y="5" width="100" height="150" style="fill:#4588ff;stroke:#888;stroke-width:3;stroke-opacity:0.3" />
+
+<circle cx="450" cy="105" r="100" style="fill:#880075;stroke:#000088;stroke-width:1;" />
+
+<text x="5" y="250" font-size="25">我今天画了直线，矩形，圆形，我真的很厉害</text>
+
+<line x1="50" y1="300" x2="50" y2="380" stroke="green" stroke-width="3" />
+<circle cx="48" cy="308" r="10" stroke="yellow" stroke-width="1" fill="pink" />
+<circle cx="55" cy="305" r="10" stroke="yellow" stroke-width="1" fill="pink" />
+<circle cx="57" cy="298" r="10" stroke="yellow" stroke-width="1" fill="pink" />
+<circle cx="53" cy="293" r="10" stroke="yellow" stroke-width="1" fill="pink" />
+<circle cx="45" cy="295" r="10" stroke="yellow" stroke-width="1" fill="pink" />
+<circle cx="40" cy="300" r="10" stroke="yellow" stroke-width="1" fill="pink" />
+<circle cx="50" cy="300" r="5" stroke="yellow" stroke-width="1" fill="yellow" />
+
+<ellipse cx="40" cy="340" rx="10" ry="3" fill="green" transform="rotate(35,40 340)"/>
+<ellipse cx="60" cy="355" rx="10" ry="3" fill="green" transform="rotate(145,60 355)"/>
+
+<path d="M120,280
+L110,300 L115,300 L100,320 L110,320 L90,340 L150,340 L130,320 L140,320 L125,300 L130,300 Z" stroke="green" stroke-width="1" fill="#33aa33"/>
+<line x1="120" y1="340" x2="120" y2="380" stroke="#aaaa88" stroke-width="5" />
+
+</svg>
