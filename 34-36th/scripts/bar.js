@@ -39,9 +39,9 @@ function creatBarChart(obj){
 
     //创建柱子
     var barWidth=20;//柱子宽度
-    var gapWidth=(axis_w-(12*barWidth)-15*2)/11;//15*2表示第一个柱子的左间隔与最后一个柱子的右间隔
+    var gapWidth=(axis_w-(12*barWidth)-15*2)/11;//柱子间隔，15*2表示第一个柱子的左间隔与最后一个柱子的右间隔
     var max=Math.max.apply(null,obj.sale);
-    var unitLength=(axis_h*3/4)/max;
+    var unitLength=(axis_h*3/4)/max;//柱子的单位高度
     for(var i=0;i<obj.sale.length;i++){
         var rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
         rect.setAttribute("width",barWidth);
