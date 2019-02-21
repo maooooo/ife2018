@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>canvas clock</title>
+</head>
+<body>
+    <canvas id="canvas" height="500" width="500">请更换支持canvas的浏览器</canvas>
+    <script>
+        window.onload=function(){
+            draw();
+        }
+        function draw(){
+            var canvas=document.getElementById("canvas");
+            var ctx=canvas.getContext("2d");
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(250,250,200,0,360,false);
+            ctx.strokeStyle="rgb(0,64,64)";
+            ctx.lineWidth="5";
+            ctx.stroke();
+            ctx.closePath();
+            
+            
+            //画刻度
+            ctx.translate(250,250);
+            for(var i=1;i<61;i++){
+                ctx.save();
+                ctx.rotate((Math.PI/180)*6*i);
+                ctx.beginPath(); 
+                if(i%5===0){
+                    ctx.moveTo(0,-170);
+                    ctx.lineWidth="5";
+                }else{
+                    ctx.moveTo(0,-180);
+                    ctx.lineWidth="3";
+                }
+                ctx.lineTo(0,-190);                
+
+                ctx.stroke();
+                ctx.closePath();
+                ctx.restore();
+            } 
+            
+
+            //时针
+            ctx.rotate((Math.PI/180)*30);
+            //ctx.lineCap("round");
+            ctx.lineWidth="10";
+            ctx.beginPath();
+            ctx.moveTo(0,20);
+            ctx.lineTo(0,-80);
+            ctx.stroke();
+            ctx.closePath();
+
+            //分针
+            ctx.rotate(-(Math.PI/180)*25);
+            //ctx.lineCap("round");
+            ctx.lineWidth="7";
+            ctx.beginPath();
+            ctx.moveTo(0,20);
+            ctx.lineTo(0,-120);
+            ctx.stroke();
+            ctx.closePath();
+
+            //秒针
+            ctx.rotate(-(Math.PI/180)*35);
+            //ctx.lineCap("round");
+            ctx.lineWidth="5";
+            ctx.strokeStyle="rgb(255,128,0)";
+            ctx.beginPath();
+            ctx.moveTo(0,20);
+            ctx.lineTo(0,-160);
+            ctx.stroke();
+            ctx.closePath();
+
+            //
+            //ctx.restore();
+            ctx.fillStyle="rgb(0,64,64)";
+            ctx.beginPath();
+            ctx.arc(0,0,10,0,Math.PI*2,false);
+            ctx.fill();
+        }   
+    </script>
+</body>
+</html>
