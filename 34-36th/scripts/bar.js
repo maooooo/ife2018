@@ -1,10 +1,11 @@
-function creatBarChart(obj){
+function createBarChart(obj){
     
     var canvas_w=500,canvas_h=300;
     var axis_w=canvas_w*0.95,axis_h=canvas_h*0.9;
 
     //创建画布
     var canvas=document.getElementById("bar-chart");
+    canvas.innerHTML="";
     canvas.setAttribute("width",canvas_w);
     canvas.setAttribute("height",canvas_h);
     

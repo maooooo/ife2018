@@ -1,6 +1,7 @@
 var regionwrapper=document.getElementById("region-radio-wrapper");
 var productwrapper=document.getElementById("product-radio-wrapper");
 var tableWrapper=document.getElementById("table-wrapper");
+var tableData;
 window.onload=function(){
     showAreaData(); 
     regionwrapper.addEventListener("click",showAreaData,false);
@@ -12,9 +13,24 @@ window.onload=function(){
             break;
         }
     }
-    creatBarChart(phonedataE);
+    createBarChart(phonedataE);
+    createLineChart(phonedataE);
 
 }
+
+tableWrapper.addEventListener("mouseover",function(e){
+    var eve=e||window.event;
+    var target=eve.target||eve.srcElement;
+    if(target.tagName==="TD"){
+        var trow=target.parentNode;
+        createLineChart(tableData[trow.rowIndex-1]);
+        createBarChart(tableData[trow.rowIndex-1]);
+        trow.className="selected";
+    }   
+},false);
+
+tableWrapper.addEventListener("mouseout",showAreaData,false);
+
 
 function showAreaData(){
     var regionboxs=regionwrapper.querySelectorAll("input");
@@ -31,7 +47,7 @@ function showAreaData(){
         }
     }
 
-    var tableData=getData(area,product);
+    tableData=getData(area,product);
     tableWrapper.innerHTML="";
     tableWrapper.appendChild(createTable(tableData,area.length,product.length));
 }

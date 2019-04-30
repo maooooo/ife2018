@@ -11,10 +11,12 @@
     <script>
         window.onload=function(){
             draw();
+            setInterval(draw,1000);
         }
         function draw(){
             var canvas=document.getElementById("canvas");
             var ctx=canvas.getContext("2d");
+            ctx.clearRect(0,0,500,500);
             ctx.save();
             ctx.beginPath();
             ctx.arc(250,250,200,0,360,false);
@@ -44,9 +46,14 @@
                 ctx.restore();
             } 
             
+            var mydate=new Date();
+            var hours=mydate.getHours(),minutes=mydate.getMinutes(),seconds=mydate.getSeconds();
+            hours=hours>12?hours-12:hours;
+            console.log(typeof hours);
 
             //时针
-            ctx.rotate((Math.PI/180)*30);
+            ctx.save();
+            ctx.rotate((Math.PI*2)*(hours/12+minutes/(60*12)));
             //ctx.lineCap("round");
             ctx.lineWidth="10";
             ctx.beginPath();
@@ -54,9 +61,11 @@
             ctx.lineTo(0,-80);
             ctx.stroke();
             ctx.closePath();
+            ctx.restore();
 
             //分针
-            ctx.rotate(-(Math.PI/180)*25);
+            ctx.save();
+            ctx.rotate((Math.PI*2)*(minutes/60+seconds/(60*60)));
             //ctx.lineCap("round");
             ctx.lineWidth="7";
             ctx.beginPath();
@@ -64,9 +73,11 @@
             ctx.lineTo(0,-120);
             ctx.stroke();
             ctx.closePath();
+            ctx.restore();
 
             //秒针
-            ctx.rotate(-(Math.PI/180)*35);
+            ctx.save();
+            ctx.rotate((Math.PI*2)*(seconds/60));
             //ctx.lineCap("round");
             ctx.lineWidth="5";
             ctx.strokeStyle="rgb(255,128,0)";
@@ -75,13 +86,15 @@
             ctx.lineTo(0,-160);
             ctx.stroke();
             ctx.closePath();
+            ctx.restore();
 
             //
-            //ctx.restore();
+            
             ctx.fillStyle="rgb(0,64,64)";
             ctx.beginPath();
             ctx.arc(0,0,10,0,Math.PI*2,false);
             ctx.fill();
+            ctx.restore();
         }   
     </script>
 </body>
